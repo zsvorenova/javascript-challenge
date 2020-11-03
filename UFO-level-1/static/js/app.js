@@ -3,7 +3,16 @@ var tableData = data;
 
 var tbody = d3.select("tbody");
 
-// YOUR CODE HERE!
+// Select the button
+var button = d3.select("#filter-btn");
+
+// Select the form
+var form = d3.select("form");
+
+// Create event handlers 
+button.on("click", runFilter);
+form.on("submit",runFilter);
+
 tableData.forEach((i) => {
     // console.log(i);
     // append row for each ufo sighting case
