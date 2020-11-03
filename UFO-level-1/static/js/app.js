@@ -14,12 +14,10 @@ button.on("click", runFilter);
 form.on("submit",runFilter);
 
 tableData.forEach((i) => {
-    // console.log(i);
     // append row for each ufo sighting case
     var row = tbody.append("tr");
 
     Object.entries(i).forEach(([key, value]) => {
-        // console.log (key, value);
         // append a cell to the row for each value in the ufo sightings dataset
         var cell = row.append("td");
         cell.text(value);
@@ -39,19 +37,23 @@ function runFilter() {
     var inputValue = inputElement.property("value");
   
     console.log(inputValue);
-    // console.log(tableData);
-  
-    var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
+
+    // to ensure that full tabel will load after clearing the form we add the if condition
+    if (inputValue === "") {
+        var filteredData = tableData;
+    }
+    else {
+        var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
+    }    
+       
+    // var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
   
     console.log(filteredData);
-
-    // Then, select the unordered list element by class name
-    // var list = d3.select(".summary");
 
     // remove data(any children) from the table body
     tbody.html("");
 
-    // append new data
+    // append new data for selected day
     filteredData.forEach((i) => {
         // console.log(i);
         // append row for each ufo sighting case
