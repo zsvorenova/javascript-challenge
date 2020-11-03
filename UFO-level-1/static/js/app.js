@@ -45,4 +45,23 @@ function runFilter() {
   
     console.log(filteredData);
 
-  };
+    // Then, select the unordered list element by class name
+    // var list = d3.select(".summary");
+
+    // remove data(any children) from the table body
+    tbody.html("");
+
+    // append new data
+    filteredData.forEach((i) => {
+        // console.log(i);
+        // append row for each ufo sighting case
+        var row = tbody.append("tr");
+    
+        Object.entries(i).forEach(([key, value]) => {
+            // console.log (key, value);
+            // append a cell to the row for each value in the ufo sightings dataset
+            var cell = row.append("td");
+            cell.text(value);
+        });
+    });
+};
