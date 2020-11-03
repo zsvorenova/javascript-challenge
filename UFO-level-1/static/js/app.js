@@ -1,13 +1,14 @@
 // from data.js
 var tableData = data;
 
+// set variables
 var tbody = d3.select("tbody");
-
 // Select the button
 var button = d3.select("#filter-btn");
-
 // Select the form
 var form = d3.select("form");
+// Select tabel area
+var tableArea=d3.select("#table-area")
 
 // Create event handlers 
 button.on("click", runFilter);
@@ -56,6 +57,13 @@ function runFilter() {
     // remove data(any children) from the table body
     tbody.html("");
 
-    // append new data for selected day
-    writeTable(filteredData);
+    // append new data for selected day or text if no data is found
+    if (filteredData.length !== 0) {
+        console.log("writing table");
+        writeTable(filteredData);
+    }
+    else {
+        console.log("no data exists");
+        tableArea.append("p").text("No such data exist!");
+    };
 };
