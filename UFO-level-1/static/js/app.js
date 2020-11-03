@@ -11,18 +11,24 @@ var form = d3.select("form");
 
 // Create event handlers 
 button.on("click", runFilter);
-form.on("submit",runFilter);
+form.on("submit", runFilter);
 
-tableData.forEach((i) => {
-    // append row for each ufo sighting case
-    var row = tbody.append("tr");
+// create a function for writing the table
+function writeTable(data) {
+    data.forEach((i) => {
+        // append row for each ufo sighting case
+        var row = tbody.append("tr");
 
-    Object.entries(i).forEach(([key, value]) => {
-        // append a cell to the row for each value in the ufo sightings dataset
-        var cell = row.append("td");
-        cell.text(value);
+        Object.entries(i).forEach(([key, value]) => {
+            // append a cell to the row for each value in the ufo sightings dataset
+            var cell = row.append("td");
+            cell.text(value);
+        });
     });
-});
+};
+
+// initial table while loading
+writeTable(tableData);
 
 // Complete the event handler function for the form
 function runFilter() {
@@ -44,26 +50,12 @@ function runFilter() {
     }
     else {
         var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
-    }    
-       
-    // var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
-  
-    console.log(filteredData);
+        console.log(filteredData);
+    };    
 
     // remove data(any children) from the table body
     tbody.html("");
 
     // append new data for selected day
-    filteredData.forEach((i) => {
-        // console.log(i);
-        // append row for each ufo sighting case
-        var row = tbody.append("tr");
-    
-        Object.entries(i).forEach(([key, value]) => {
-            // console.log (key, value);
-            // append a cell to the row for each value in the ufo sightings dataset
-            var cell = row.append("td");
-            cell.text(value);
-        });
-    });
+    writeTable(filteredData);
 };
