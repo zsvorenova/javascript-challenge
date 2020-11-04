@@ -14,25 +14,14 @@ var tableArea=d3.select("#table-area")
 // Create event handlers 
 button.on("click", runFilter);
 
-// d3.selectAll("li").on("click", function() {
-//     // you can select the element just like any other selection
-//     var listItem = d3.select(this);
-//     // listItem.style("color", "blue");
-  
-//     var listItemText = listItem.text();
-//     console.log(listItemText);
-//   });
-  
-form.on("submit", runFilter);
-// d3.selectAll("form").on("submit", function() {
-//     d3.event.preventDefault();
-//     // you can select the element just like any other selection
-//     var Item = d3.select(this).property("value");
-//     // listItem.style("color", "blue");
-  
-//     // var ItemText = Item.text();
-//     console.log(Item);
-//   });
+form.on("submit", function() {
+    d3.event.preventDefault();
+    console.log(this);
+    var value = d3.event.target.value;
+    console.log(value);
+    runFilter();
+
+});
 
 // create a function for writing the table
 function writeTable(data) {
@@ -61,19 +50,40 @@ function runFilter() {
     // var inputElement = d3.select("#datetime");
   
     // Get the value property of the input element
-    var inputValue = d3.select("#city").property("value");
+    var date = d3.select("#datetime").property("value");
+    var city = d3.select("#city").property("value");
+    var country = d3.select("#country").property("value");
+    var state = d3.select("#state").property("value");
+    var shape = d3.select("#shape").property("value");
+
   
-    console.log(inputValue);
+    console.log(date,city,country,state,shape);
 
     // to ensure that full tabel will load after clearing the form we add the if condition
-    if (inputValue === "") {
-        var filteredData = tableData;
-    }
-    else {
-        var filteredData = tableData.filter(sighting => sighting.city === inputValue);
+    if (date !== "") {
+        var filteredData = tableData.filter(sighting => sighting.datetime === date);
         console.log(filteredData);
-    };    
-
+    }
+    else if (city !== "") {
+        var filteredData = tableData.filter(sighting => sighting.city === city);
+        console.log(filteredData);
+    }
+    else if (state !== "") {
+        var filteredData = tableData.filter(sighting => sighting.state === state);
+        console.log(filteredData);
+    }
+    else if (country !== "") {
+        var filteredData = tableData.filter(sighting => sighting.country === country);
+        console.log(filteredData);
+    }
+    else if (shape !== "") {
+        var filteredData = tableData.filter(sighting => sighting.shape === shape);
+        console.log(filteredData);
+    }      
+    else {
+        var filteredData = tableData;
+    };
+      
     // remove data(any children) from the table body
     tbody.html("");
 
