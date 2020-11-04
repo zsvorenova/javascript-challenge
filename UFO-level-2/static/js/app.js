@@ -6,13 +6,33 @@ var tbody = d3.select("tbody");
 // Select the button
 var button = d3.select("#filter-btn");
 // Select the form
-var form = d3.select("form");
+var form = d3.selectAll("form");
+// console.log(forms)
 // Select tabel area
 var tableArea=d3.select("#table-area")
 
 // Create event handlers 
 button.on("click", runFilter);
+
+// d3.selectAll("li").on("click", function() {
+//     // you can select the element just like any other selection
+//     var listItem = d3.select(this);
+//     // listItem.style("color", "blue");
+  
+//     var listItemText = listItem.text();
+//     console.log(listItemText);
+//   });
+  
 form.on("submit", runFilter);
+// d3.selectAll("form").on("submit", function() {
+//     d3.event.preventDefault();
+//     // you can select the element just like any other selection
+//     var Item = d3.select(this).property("value");
+//     // listItem.style("color", "blue");
+  
+//     // var ItemText = Item.text();
+//     console.log(Item);
+//   });
 
 // create a function for writing the table
 function writeTable(data) {
@@ -38,10 +58,10 @@ function runFilter() {
     d3.event.preventDefault();
     
     // Select the input element and get the raw HTML node
-    var inputElement = d3.select("#datetime");
+    // var inputElement = d3.select("#datetime");
   
     // Get the value property of the input element
-    var inputValue = inputElement.property("value");
+    var inputValue = d3.select("#city").property("value");
   
     console.log(inputValue);
 
@@ -50,7 +70,7 @@ function runFilter() {
         var filteredData = tableData;
     }
     else {
-        var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
+        var filteredData = tableData.filter(sighting => sighting.city === inputValue);
         console.log(filteredData);
     };    
 
