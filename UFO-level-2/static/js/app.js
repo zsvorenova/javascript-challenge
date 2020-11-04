@@ -8,7 +8,7 @@ var button = d3.select("#filter-btn");
 // Select the form
 var form = d3.selectAll("form");
 // Select tabel area
-var tableArea=d3.select("#table-area")
+var tableArea = d3.select("#table-area")
 
 // Create event handlers 
 button.on("click", runFilter);
@@ -33,53 +33,48 @@ writeTable(tableData);
 
 // Complete the event handler function for the form
 function runFilter() {
-    
+
     // Prevent the page from refreshing
     d3.event.preventDefault();
-        
+
     // Get the value property of the input element
     var date = d3.select("#datetime").property("value");;
     var city = d3.select("#city").property("value");
     var country = d3.select("#country").property("value");
     var state = d3.select("#state").property("value");
     var shape = d3.select("#shape").property("value");
-  
-    console.log(date,city,country,state,shape);
+
+    console.log(date, city, country, state, shape);
 
     // filter data based on the inputted parameter
     if (date !== "") {
         var filteredData = tableData.filter(sighting => sighting.datetime === date);
         console.log(filteredData);
-    }
-    else if (city !== "") {
+    } else if (city !== "") {
         var filteredData = tableData.filter(sighting => sighting.city === city);
         console.log(filteredData);
-    }
-    else if (state !== "") {
+    } else if (state !== "") {
         var filteredData = tableData.filter(sighting => sighting.state === state);
         console.log(filteredData);
-    }
-    else if (country !== "") {
+    } else if (country !== "") {
         var filteredData = tableData.filter(sighting => sighting.country === country);
         console.log(filteredData);
-    }
-    else if (shape !== "") {
+    } else if (shape !== "") {
         var filteredData = tableData.filter(sighting => sighting.shape === shape);
         console.log(filteredData);
-    }      
-    else {
+    } else {
         var filteredData = tableData;
     };
-      
+
     // remove data(any children) from the table body
     tbody.html("");
+    tableArea.selectAll('p').html("");
 
     // append new data for selected day or text if no data is found
     if (filteredData.length !== 0) {
         console.log("writing table");
         writeTable(filteredData);
-    }
-    else {
+    } else {
         console.log("no data exists");
         tableArea.append("p").text("No such data exist!");
     };
