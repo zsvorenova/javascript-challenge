@@ -7,21 +7,12 @@ var tbody = d3.select("tbody");
 var button = d3.select("#filter-btn");
 // Select the form
 var form = d3.selectAll("form");
-// console.log(forms)
 // Select tabel area
 var tableArea=d3.select("#table-area")
 
 // Create event handlers 
 button.on("click", runFilter);
-
-form.on("submit", function() {
-    d3.event.preventDefault();
-    console.log(this);
-    var value = d3.event.target.value;
-    console.log(value);
-    runFilter();
-
-});
+form.on("submit", runFilter);
 
 // create a function for writing the table
 function writeTable(data) {
@@ -42,24 +33,20 @@ writeTable(tableData);
 
 // Complete the event handler function for the form
 function runFilter() {
-
+    
     // Prevent the page from refreshing
     d3.event.preventDefault();
-    
-    // Select the input element and get the raw HTML node
-    // var inputElement = d3.select("#datetime");
-  
+        
     // Get the value property of the input element
-    var date = d3.select("#datetime").property("value");
+    var date = d3.select("#datetime").property("value");;
     var city = d3.select("#city").property("value");
     var country = d3.select("#country").property("value");
     var state = d3.select("#state").property("value");
     var shape = d3.select("#shape").property("value");
-
   
     console.log(date,city,country,state,shape);
 
-    // to ensure that full tabel will load after clearing the form we add the if condition
+    // filter data based on the inputted parameter
     if (date !== "") {
         var filteredData = tableData.filter(sighting => sighting.datetime === date);
         console.log(filteredData);
