@@ -5,14 +5,32 @@ var tableData = data;
 var tbody = d3.select("tbody");
 // Select the button
 var button = d3.select("#filter-btn");
+var clear = d3.select("#clear-btn");
 // Select the form
 var form = d3.selectAll("form");
 // Select tabel area
 var tableArea = d3.select("#table-area")
 
+var filter = {};
+
 // Create event handlers 
 button.on("click", runFilter);
 form.on("submit", runFilter);
+
+// event on clearing filter:
+// inspiration: https://stackoverflow.com/questions/16198652/clearing-a-form-field-in-javascript-upon-click
+// inspiration: https://www.w3schools.com/howto/howto_html_clear_input.asp
+clear.on("click", function(event) {
+    tbody.html("");
+    tableArea.selectAll('p').html("");
+    document.getElementById('datetime').value = "";
+    document.getElementById('city').value = ""
+    document.getElementById('country').value = ""
+    document.getElementById('state').value = ""
+    document.getElementById('shape').value = ""
+    writeTable(tableData);
+    console.log("clear filter");
+})
 
 // create a function for writing the table
 function writeTable(data) {
@@ -46,7 +64,7 @@ function runFilter() {
     console.log(date, city, country, state, shape);
     
     // create a filter array and add inserted data
-    var filter = {};
+    // var filter = {};
     if (date !== "") {
         filter.datetime = date;
     };
