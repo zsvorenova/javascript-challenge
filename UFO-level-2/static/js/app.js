@@ -38,34 +38,43 @@ function runFilter() {
     d3.event.preventDefault();
 
     // Get the value property of the input element
-    var date = d3.select("#datetime").property("value");;
+    var date = d3.select("#datetime").property("value");
     var city = d3.select("#city").property("value");
     var country = d3.select("#country").property("value");
     var state = d3.select("#state").property("value");
     var shape = d3.select("#shape").property("value");
-
     console.log(date, city, country, state, shape);
-
-    // filter data based on the inputted parameter
+    
+    // create a filter array and add inserted data
+    var filter = {};
     if (date !== "") {
-        var filteredData = tableData.filter(sighting => sighting.datetime === date);
-        console.log(filteredData);
-    } else if (city !== "") {
-        var filteredData = tableData.filter(sighting => sighting.city === city);
-        console.log(filteredData);
-    } else if (state !== "") {
-        var filteredData = tableData.filter(sighting => sighting.state === state);
-        console.log(filteredData);
-    } else if (country !== "") {
-        var filteredData = tableData.filter(sighting => sighting.country === country);
-        console.log(filteredData);
-    } else if (shape !== "") {
-        var filteredData = tableData.filter(sighting => sighting.shape === shape);
-        console.log(filteredData);
-    } else {
-        var filteredData = tableData;
+        filter.datetime = date;
     };
+    if (city !== "") {
+        filter.city = city;
+    };
+    if (country !== "") {
+        filter.country = country;
+    };
+    if (state !== "") {
+        filter.state = state;
+    };
+    if (shape !== "") {
+        filter.shape = shape;
+    };
+    
+    console.log(filter);
 
+    // filter the data - source: https://stackoverflow.com/questions/31831651/javascript-filter-array-multiple-conditions/44807918
+    filteredData = tableData.filter(function(item) {
+       for (var key in filter) {
+            if (item[key] === undefined || item[key] != filter[key])
+                return false;
+                }
+            return true;
+    });
+    console.log(filteredData);
+    
     // remove data(any children) from the table body
     tbody.html("");
     tableArea.selectAll('p').html("");
